@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/list.css"/>
+	</head>
+	<body>
+		<header>
+			<div class="message" onclick="history.back()"><img src="image/list/list_1.png"/></div>
+			<div class="search">
+				<h2>推荐专区</h2>
+			</div>
+			<div class="sys"><img src="image/list/list_2.png"/></div>
+			
+		</header>
+		<div class="btns">
+			<a href="#" class="active">食材特惠</a>
+			<a href="#">配件服饰特惠</a>
+			<a href="#">换自然</a>
+			<a href="#">丁磊的好货推荐</a>
+		</div>
+<div id="box">
+		<div v-if="isShow">你要找的商品不存在~</div>
+		<main v-else>
+		<div class="add1">
+			<p>每满199立减30；活动时间：5.28--6.3</p>
+		</div>
+		<div class="add2">
+		<div v-for="item in ary">		
+				<img :src="item.img" v-on:click="jump(item.id)" />
+				<p>满额减</p>
+				<span>{{item.title}}</span>
+				<em>￥{{item.price}}</em>
+		</div>
+	</div>		
+		</main>
+</div>	
+		
+		
+	<!--<main>
+		<div class="add1">
+			<p>每满199立减30；活动时间：5.28--6.3</p>
+		</div>
+		<div class="add2">
+			<div>
+				<img src="image/list/list_3.png"/>
+				<p>满额减</p>
+				<span>挚爱的纽约牛皮水桶包</span>
+				<em>￥459</em>
+			</div>
+			<div>
+				<img src="image/list/list_4.png"/>
+				<p>满额减</p>
+				<span>英伦温莎清雅双肩包13L</span>
+				<em>￥199</em>
+			</div>
+		</div>
+		<div class="add2">
+			<div>
+				<img src="image/list/list_5.png"/>
+				<p>满额减</p>
+				<span>牛皮复古公文包</span>
+				<em>￥459</em>
+			</div>
+			<div>
+				<img src="image/list/list_6.png"/>
+				<p>满额减</p>
+				<span>科技感防盗双肩包</span>
+				<em>￥199</em>
+			</div>
+					
+		</div>
+		<div class="add2">
+			<div>
+				<img src="image/list/list_7.png"/>
+				<p>满额减</p>
+				<span>2双装 兔羊毛中简秋冬长筒袜</span>
+				<em>￥29</em>
+			</div>
+			<div>
+				<img src="image/list/list_8.png"/>
+				<p>满额减</p>
+				<span>2条装 男士梭织绅士neiku</span>
+				<em>￥199</em>
+			</div>
+			</div>
+		<div class="add2">
+			<div>
+				<img src="image/list/list_9.png"/>
+				<p>满额减</p>
+				<span>经典纯色防滑人字拖</span>
+				<em>￥29</em>
+			</div>
+			<div>
+				<img src="image/list/list_10.png"/>
+				<p>满额减</p>
+				<span>纯色羊绒混纺针织披肩</span>
+				<em>￥199</em>
+			</div>
+						
+		</div>
+		<div class="add2">
+			<div>
+				<img src="image/list/list_11.png"/>
+				<p>满额减</p>
+				<span>皮毛一体女款人字拖</span>
+				<em>￥129</em>
+			</div>
+			<div>
+				<img src="image/list/list_12.png"/>
+				<p>满额减</p>
+				<span>皮毛一体女款一字拖</span>
+				<em>￥239</em>
+			</div>
+	</div>
+</main>-->
+<footer>
+	<a href="index.html"><img src="image/index/icon_1_1.png"/><p>首页</p></a>
+	<a href="#"><img src="image/index/icon_1_2.png"/><p>识物</p></a>
+	<a href="category.html"><img src="image/index/icon_2_3.png"/><p>分类</p></a>
+	<a href="shopcar.html"><img src="image/index/icon_1_4.png"/><p>购物车</p></a>
+	<a href="user.html"><img src="image/index/icon_1_5.png"/><p>个人</p></a>
+		
+</footer>			
+		
+		
+		<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
+				<script src="vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="axios/dist/axios.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+				var codeStr = decodeURI(location.search.split("=")[1]); 
+			console.log(codeStr)
+			var app = new Vue({
+				el:"#box",
+				data:{
+					isShow:true,
+//					ary:[]
+				},
+				created(){
+					if(codeStr != "undefined"){
+						
+						axios.get("/list/"+codeStr).then((res)=>{
+							console.log(res)
+							if(res.data.length != 0){
+								this.isShow = false;
+								this.ary = res.data
+							}
+						})
+					}
+				},
+				methods:{
+					jump(id){
+						location = "detail.html?id="+id;
+					}
+				}
+			})
+		</script>
+	</body>
+</html>

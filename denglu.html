@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/denglu.css"/>
+	</head>
+	<body>
+<header>
+	<div>
+		<div class="message" onclick="history.back()"><img src="image/denglu/denglu_zuo.png"/></div>
+			<div class="search">
+				<h2>手机号登录</h2>
+			</div>
+			<div class="sys" >
+			<a href="reg.html">注册</a>	
+			</div>
+	</div>
+</header>	  	
+<main>
+	<div>
+		<div class="mn_add1">
+			<div>
+			<div class="wangyi">
+			<p>网易</p>	
+			</div>
+		<div class="yanxuan">
+				<p>严选</p>
+			</div>
+	</div>		
+</div>
+        <div class="mn_add2">
+		<span>+86</span>
+		<input type="text" value="请输入手机号" />
+	</div>
+	<div class="mn_add3">
+		<input type="text" value="请输入密码" />
+		</div>
+   	<div class="mn_add5">
+			<div>
+				<a href="dingdan.html"><p>登录</p></a>
+			 
+			</div>
+		</div>
+</main>		
+
+
+
+<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
+<script src="vue/dist/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="axios/dist/axios.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var app = new Vue({
+				el:"#box",
+				data:{
+					obj:{
+						phone:"",
+						pwd:""
+					}
+				},
+				methods:{
+					login(){
+						axios.post("/login",this.obj).then((res)=>{
+							console.log(res)
+							if(res.data == "ok"){ 
+								localStorage.setItem("phone",this.obj.phone)
+								location = localStorage.getItem("loginJump");
+							}else{
+								alert(res.data)
+							}
+						})
+					}
+				}
+			})
+		</script>
+	</body>
+</html>
